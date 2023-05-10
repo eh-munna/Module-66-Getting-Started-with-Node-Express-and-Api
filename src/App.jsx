@@ -8,6 +8,29 @@ function App() {
       .then((res) => res.json())
       .then((data) => setUsers(data));
   }, []);
+  const createUser = (event) => {
+    event.preventDefault();
+    const form = event.target;
+    const name = form.name.value;
+    const email = form.email.value;
+    const user = { name, email };
+    form.reset();
+
+    // console.log(user);
+    // console.log(`name : ${name}, email : ${email}`);
+
+    // data are sending to the server
+
+    fetch('http://localhost:5000/users', {
+      method: 'POST',
+      headers: {
+        'content-type': 'application/json',
+      },
+      body: JSON.stringify(user),
+    })
+      .then((res) => res.json())
+      .then((data) => {});
+  };
   return (
     <>
       <h1 style={{ color: 'green' }}>User Management System</h1>
@@ -20,6 +43,30 @@ function App() {
           </p>
         ))}
       </div>
+      <h3>Sending data to the backend</h3>
+      <form onSubmit={createUser}>
+        <div
+          style={{
+            marginTop: '10px',
+          }}
+        >
+          <input type="text" name="name" id="" placeholder="name" />
+        </div>
+        <div
+          style={{
+            marginTop: '10px',
+          }}
+        >
+          <input type="email" name="email" id="" placeholder="email" />
+        </div>
+        <div
+          style={{
+            marginTop: '10px',
+          }}
+        >
+          <button type="submit">Add User</button>
+        </div>
+      </form>
     </>
   );
 }
