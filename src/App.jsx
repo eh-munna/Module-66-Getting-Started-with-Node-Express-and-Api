@@ -14,13 +14,8 @@ function App() {
     const name = form.name.value;
     const email = form.email.value;
     const user = { name, email };
-    form.reset();
-
-    // console.log(user);
-    // console.log(`name : ${name}, email : ${email}`);
 
     // data are sending to the server
-
     fetch('http://localhost:5000/users', {
       method: 'POST',
       headers: {
@@ -29,8 +24,14 @@ function App() {
       body: JSON.stringify(user),
     })
       .then((res) => res.json())
-      .then((data) => {});
+      .then((data) => {
+        const newUser = [...users, data];
+        setUsers(newUser);
+      });
+    form.reset();
   };
+  console.log(users);
+
   return (
     <>
       <h1 style={{ color: 'green' }}>User Management System</h1>
